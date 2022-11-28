@@ -80,8 +80,6 @@ async function useData(){
     // const dr = (trip.daterange);
     // console.log(dr);
 
-
-
     // const link = document.createElement('h5');
     // link.className = 'card-title';
     // link.innerHTML = "Rome, Italy";
