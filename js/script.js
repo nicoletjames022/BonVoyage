@@ -144,13 +144,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 });
 
-// window.onload.addEventListener("load", function(event) {
-//     refreshData()
-// })
-// document.addEventListener('DOMContentLoaded', function(event) {
-//     refreshData()
-// })
-
 // NAV
 const tabs = document.querySelectorAll(".tab");
 
