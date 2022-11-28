@@ -26,19 +26,37 @@ document.querySelector("#show-addTrip").addEventListener("click", function(){
 });
 
 // var trip = document.querySelector("#addTripCard").addEventListener("click", useData)
-document.querySelector("#addTripCard").addEventListener("click", addSupabase)
+// document.querySelector("#addTripCard").addEventListener("click", addSupabase())
+
+document.querySelector("#addTripCard").addEventListener("click", function(){
+    document.querySelector("#addTripCard").addEventListener("click", async (e) => {
+        e.preventDefault();
+        
+        const location = document.getElementById('location').value;
+        const daterange = document.getElementById('daterange').value;
+        console.log(location);
+        console.log(daterange);
+        console.log(diffDays);
+
+        let { data, error } = await supabase
+            .from('trip')
+            .insert([
+                { location: location, daterange: daterange , difference: diffDays},
+            ])
+        // document.getElementById('myForm').reset();
+        console.log(data);
+    });
+    refreshData();
+});
 
 async function useData(trip){
-    const cards = document.querySelector('#my_div');
+    console.log("in useData");
+    const cards = document.getElementById('newDiv');
 
     const l = trip.location;
     console.log(l);
     const dr = (trip.daterange);
     console.log(dr);
-
-    // const location = document.getElementById('location');
-    // const daterange = document.getElementById('daterange');
-
 
     const link = document.createElement('h5');
     link.className = 'card-title';
@@ -85,28 +103,27 @@ $(function() {
     });
 });
 
-function addSupabase() {
-    document.querySelector("#addTripCard").addEventListener("click", async (e) => {
-        e.preventDefault();
+// function addSupabase() {
+//     document.querySelector("#addTripCard").addEventListener("click", async (e) => {
+//         e.preventDefault();
         
-        const location = document.getElementById('location').value;
-        const daterange = document.getElementById('daterange').value;
-        console.log(location);
-        console.log(daterange);
-        console.log(diffDays);
+//         const location = document.getElementById('location').value;
+//         const daterange = document.getElementById('daterange').value;
+//         console.log(location);
+//         console.log(daterange);
+//         console.log(diffDays);
 
-        let { data, error } = await supabase
-            .from('trip')
-            .insert([
-                { location: location, daterange: daterange , difference: diffDays},
-            ])
-        // document.getElementById('myForm').reset();
-        console.log(data);
-    });
-
-    refreshData();
+//         let { data, error } = await supabase
+//             .from('trip')
+//             .insert([
+//                 { location: location, daterange: daterange , difference: diffDays},
+//             ])
+//         // document.getElementById('myForm').reset();
+//         console.log(data);
+//     });
+//     refreshData();
  
-}
+// }
 
 async function refreshData(){
     let { data: trip, error } = await supabase
@@ -117,32 +134,26 @@ async function refreshData(){
         console.error(error)
         return
     }
-    // console.log(trip);
+    console.log("in refresh");
+    useData(trip);
 
-    Object.keys(trip).forEach(key => {
-        console.log(key); // 👉️ "name", "country"
-        console.log(trip[key]); // 👉️ "Tom", "Chile"
+    // Object.keys(trip).forEach(key => {
+    //     console.log(key); // 👉️ "name", "country"
+    //     console.log(trip[key]); // 👉️ "Tom", "Chile"
 
-        var info = trip[key];
-        useData(info)
-
-    });
-
-    // trip.forEach((trip, index) => {
-    //     let dom = trip;
-    //     console.log(trip);
-    //     useData(trip);
-
+    //     var info = trip[key];
+    //     useData(info);
     // });
-
 }
 
-window.addEventListener('DOMContentLoaded', (event) => {
-    console.log('DOM fully loaded and parsed');
-    removePlaceholder()
-    refreshData()
+// window.addEventListener('DOMContentLoaded', (event) => {
+//     if (removeP = true) {
+//         console.log('DOM fully loaded and parsed');
+//         refreshData();
+//     // removePlaceholder()
+//     }
 
-});
+// });
 
 // NAV
 const tabs = document.querySelectorAll(".tab");
