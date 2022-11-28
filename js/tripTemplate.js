@@ -5,6 +5,23 @@ const supabaseUrl = 'https://rarwudilqkyaxobekvcn.supabase.co'
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhcnd1ZGlscWt5YXhvYmVrdmNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njc1MDU1OTEsImV4cCI6MTk4MzA4MTU5MX0.G4jez26w4I65JHemzGjlGUtXuksbUcIeIgFc8xBWWDM'
 const supabase = createClient(supabaseUrl, supabaseKey)
 
+
+window.addEventListener("unload", (event) => {
+    console.log("page hasn't fully loaded");
+    syncTimeline()
+});
+
+async function syncTimeline(){
+    let { data: trip, error } = await supabase
+    .from('trip')
+    .select('difference')
+    if (error) {
+        console.error(error)
+        return
+    }
+    console.log(trip);
+}
+
 // Day 1
 
 let removeP = false;

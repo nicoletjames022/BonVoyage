@@ -12,8 +12,7 @@
 }
 
 .container {
-    margin-top: 40px;
-    margin: 20px;
+    margin-top: 40px !important;
 }
 
 body {
@@ -27,8 +26,8 @@ nav {
     text-align: center;
     margin: 0;
     transition: background-color 0.4s linear;
-
 }
+
 .sticky {
     position: fixed;
     bottom: -10;
@@ -106,86 +105,6 @@ nav {
     transform:translate(-50%,-50%);
 }
 
-.popup {
-    position: absolute;
-    top: -150%;
-    left: 50%;
-    opacity: 0;
-    transform:translate(-50%,-50%) scale(1.25);
-    width: 400px;
-    padding: 30px 30px;
-    background: rgb(229, 229, 229);
-    box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0, 15);
-    border-radius: 10px;
-    transition: top 0ms ease-in-out 200ms, 
-                opacity 200ms ease-in-out 0ms, 
-                transform 200ms ease-in-out 0ms;
-}
-.popup.active {
-    position: absolute;
-    z-index: 2;
-    z-index: 50px;
-    top: 50%;
-    opacity: 1;
-    transform:translate(-50%,-50%) scale(1);
-    transition: top 0ms ease-in-out 0ms, 
-                opacity 200ms ease-in-out 0ms, 
-                transform 20ms ease-in-out 0ms;
-
-}
-.popup .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 15px;
-    height: 15px;
-    background: #888;
-    color: #eee;
-    text-align: center;
-    line-height: 15px;
-    border-radius: 15px;
-    cursor: pointer;
-}
-
-.popup .form h2 {
-    text-align: center;
-    color: #222;
-    margin: 10px 0px 20px;
-    font-size: 25px;
-}
-
-.popup .form .form-elements {
-    margin: 15px 0px;
-}
-
-.popup .form .form-label{
-    font-size: 14px;
-    color: #222;
-}
-
-.popup .form .form-elements input[type="text"],
-.popup .form .form-elements input[type="date"] {
-    margin-top: 5px;
-    display: block;
-    width: 100%;
-    padding: 10px;
-    outline: none;
-    border: 1px solid #aaa;
-    border-radius: 5px;
-}
-
-.popup .form .form-elements button {
-    width: 100%;
-    height: 40px;
-    border: none;
-    outline: none;
-    font-size: 15px;
-    background: #222;
-    color: #f5f5ff;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
 .addBtn {
     position: absolute;
     border: none;
@@ -201,8 +120,6 @@ nav {
 }
 
 .text{
-    /* margin: 40px;
-    display: block; */
     align-items: center;
 }
 
@@ -223,7 +140,6 @@ button:focus {
 } 
 
 .card {
-    /* display: flex; */
     outline: none;
     cursor: pointer;
     box-shadow: rgba(204, 219, 232) 0px 3px 8px;
@@ -237,8 +153,7 @@ button:focus {
     display: flex;
     flex-wrap: wrap;
 
-    /* position: relative; */
-    /* display: flex; */
+
     /* justify-content: space-between;  */
 }
 .break {
@@ -249,3 +164,20 @@ button:focus {
 a {
     text-decoration: none !important;
 }
+
+@media (min-width: 576px) {  
+    /* .btn-group {
+        left: 20px !important;
+    } */
+
+}
+
+@media (min-width: 768px) { 
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {  }
+
+/* // X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {  }

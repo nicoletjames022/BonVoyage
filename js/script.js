@@ -5,10 +5,70 @@ const supabaseUrl = 'https://rarwudilqkyaxobekvcn.supabase.co'
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhcnd1ZGlscWt5YXhvYmVrdmNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njc1MDU1OTEsImV4cCI6MTk4MzA4MTU5MX0.G4jez26w4I65JHemzGjlGUtXuksbUcIeIgFc8xBWWDM'
 const supabase = createClient(supabaseUrl, supabaseKey)
 
-if ("serviceWorker" in navigator) {
-    // register service worker
-    navigator.serviceWorker.register("service-worker.js");
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+     navigator.serviceWorker.register('../web-server.js').then( () => {
+      console.log('Service Worker Registered')
+     })
+   })
 }
+
+let removeP = false;
+
+function removePlaceholder() {
+    var placeholder = document.getElementById("replace");
+    placeholder.remove();
+    removeP = true;
+}
+
+document.querySelector("#show-addTrip").addEventListener("click", function(){
+    if (!removeP) removePlaceholder();
+});
+
+// var trip = document.querySelector("#addTripCard").addEventListener("click", useData)
+document.querySelector("#addTripCard").addEventListener("click", addSupabase)
+
+async function useData(trip){
+    const cards = document.querySelector('#my_div');
+
+    const l = trip.location;
+    console.log(l);
+    const dr = (trip.daterange);
+    console.log(dr);
+
+    // const location = document.getElementById('location');
+    // const daterange = document.getElementById('daterange');
+
+
+    const link = document.createElement('h5');
+    link.className = 'card-title';
+    link.innerHTML = l;
+    cards.appendChild(link);
+    
+    const newdate = document.createElement('p');
+    newdate.className = 'card-date';
+    newdate.innerHTML = dr;
+    cards.appendChild(newdate);
+
+
+    const tripDetails = `<a href="tripTemplate.html">
+                <button id="trip-card">
+                    <div class="card" style="width: 32rem; height: 30%">
+                        <div class="card-body">
+                        <h5 class="card-title">${location}</h5>
+                        <p class="card-date">${daterange}</p>
+                        </div>
+                    </div>
+                </button>
+            </a>
+        <div class="break"></div>`;
+        
+    cards.innerHTML += tripDetails;
+
+    document.getElementById('myForm').reset();   
+
+};
+
 
 let diffDays = 0;
 
@@ -25,96 +85,12 @@ $(function() {
     });
 });
 
-let removeP = false;
-
-function removePlaceholder() {
-    var placeholder = document.getElementById("replace");
-    placeholder.remove();
-    removeP = true;
-}
-
-document.querySelector("#show-addTrip").addEventListener("click", function(){
-    if (!removeP) removePlaceholder();
-});
-
-// var trip = document.querySelector("#addTripCard").addEventListener("click", useData)
-const cards = document.querySelector("#addTripCard").addEventListener("click", addSupabase)
-
-// let main;
-// export default main = async () => {
-//     let { data: trip, error } = await supabase
-//     .from('tripcards')
-//     .select('id, location, daterange')
-//     .range(0,10)
-//     if (error) {
-//         console.error(error)
-//         return
-//     }
-//     console.log(trip)
-// }
-
-async function useData(){
-    let { data: trip, error } = await supabase
-    .from('trip')
-    .select('location, daterange')
-    .range(0,10)
-    if (error) {
-        console.error(error)
-        return
-    }
-    console.log(trip)
-
-    // const location = document.getElementById('location').value;
-    // const daterange = document.getElementById('daterange').value;
-
-    return trip.forEach(async trip => {
-        
-        const tripDetails = `<a href="tripTemplate.html">
-                <button id="trip-card">
-                    <div class="card" style="width: 30rem; height: 30%">
-                        <div class="card-body">
-                        <h5 class="card-title">${location}</h5>
-                        <p class="card-date">${daterange}</p>
-                        </div>
-                    </div>
-                </button>
-            </a>
-        <div class="break"></div>`;
-        document.getElementById("my_div").innerHTML += tripDetails;
-        await apex.pwa.isInstallable();
-        
-    });
-    
-    const tripDetails = `<a href="tripTemplate.html">
-                <button id="trip-card">
-                    <div class="card" style="width: 30rem; height: 30%">
-                        <div class="card-body">
-                        <h5 class="card-title">${location}</h5>
-                        <p class="card-date">${daterange}</p>
-                        </div>
-                    </div>
-                </button>
-            </a>
-        <div class="break"></div>`;
-
-    document.getElementById("my_div").innerHTML += tripDetails;
-    
-
-    // let newContainerDiv = document.createElement('div');
-    // let containerDiv = document.querySelector('.newDiv');
-    // newContainerDiv.classList.add('newDiv');
-    // containerDiv.appendChild(newContainerDiv);
-    // newContainerDiv.insertAdjacentHTML('beforebegin', tripDetails);
-
-};
-// window.onload.addEventListener("DOMContentloaded", addSupabase)
-
 function addSupabase() {
     document.querySelector("#addTripCard").addEventListener("click", async (e) => {
         e.preventDefault();
         
         const location = document.getElementById('location').value;
-        var daterange = document.getElementById('daterange').value;
+        const daterange = document.getElementById('daterange').value;
         console.log(location);
         console.log(daterange);
         console.log(diffDays);
@@ -125,14 +101,55 @@ function addSupabase() {
                 { location: location, daterange: daterange , difference: diffDays},
             ])
         // document.getElementById('myForm').reset();
+        console.log(data);
     });
 
-    useData();
-
-    document.getElementById('myForm').reset();    
+    refreshData();
+ 
 }
 
+async function refreshData(){
+    let { data: trip, error } = await supabase
+    .from('trip')
+    .select('location, daterange')
+    .range(0,10)
+    if (error) {
+        console.error(error)
+        return
+    }
+    // console.log(trip);
 
+    Object.keys(trip).forEach(key => {
+        console.log(key); // 👉️ "name", "country"
+        console.log(trip[key]); // 👉️ "Tom", "Chile"
+
+        var info = trip[key];
+        useData(info)
+
+    });
+
+    // trip.forEach((trip, index) => {
+    //     let dom = trip;
+    //     console.log(trip);
+    //     useData(trip);
+
+    // });
+
+}
+
+window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    removePlaceholder()
+    refreshData()
+
+});
+
+// window.onload.addEventListener("load", function(event) {
+//     refreshData()
+// })
+// document.addEventListener('DOMContentLoaded', function(event) {
+//     refreshData()
+// })
 
 // NAV
 const tabs = document.querySelectorAll(".tab");
@@ -161,8 +178,6 @@ tabs.forEach((clickedTab) => {
 //     containerDiv.appendChild(newContainerDiv);
 
 //     newContainerDiv.insertAdjacentHTML('beforebegin', data);
-
-    
 // }
 
 
