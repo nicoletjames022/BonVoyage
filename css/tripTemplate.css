@@ -1,0 +1,108 @@
+@charset "UTF-8";
+
+/* @font-face {
+    font-family: "Microgramma";
+    src: url("/css/fonts/Microgramma\ D\ Extended\ Bold.otf");
+} */
+
+*{
+  
+    margin:0;
+    padding:0;
+    outline:none;
+    text-decoration:none;
+    list-style:none;
+    font-family: 'Mulish', sans-serif;
+    
+}
+
+.back-btn {
+    position: relative;
+    margin: 20px;
+    top: 30px;
+    font-size: 20px;
+    
+}
+
+.container {
+    margin: 20px;
+    margin-top: 50px;
+
+}
+
+.btn-group {
+    width: 100%;
+    border-radius: 40px !important;
+    /* left: 25%; */
+}
+
+
+.addBtn {
+    position: absolute;
+    border: none;
+    bottom: 50px;
+    right: 45px;
+    border-radius: 100%;
+
+    height: 60px;
+    width: 60px;
+
+    background-color: #72A3B2;
+    color: white;
+}
+
+.card{
+    width: 90%;
+    height: 100%;
+    font-size: 12px;
+    margin: 20px;
+    text-align: justify;
+    position: relative;
+    padding: 10px;
+
+    outline: none;
+    box-shadow: rgba(204, 219, 232) 0px 3px 8px;
+}
+
+.placeholderDiv {
+    padding: 20px;
+    padding-top: 50px;
+    /* display: flex; */
+    align-content: center;
+    text-align: center;
+}
+
+.tab-content-active {
+    display: block;
+}
+
+
+[data-tab-info] {
+    display: none;
+}
+  
+.active[data-tab-info] {
+    display: block;
+}
+  
+.sm-text {
+    margin: 5px;
+    display: none;
+    font-size: small;
+    font-weight: bolder;
+    kerning: auto;
+    text-align: center;
+}
+
+.btn-outline-primary {
+    border-color: #72A3B2 !important;
+    color: #72A3B2 !important;
+}
+.btn-group>.btn-check:checked+.btn {
+    background-color: #72A3B2 !important;
+    color: white !important;
+}
+
+.icon-color {
+    color: #72A3B2 !important;
+}

@@ -1,0 +1,198 @@
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="css/tripTemplate.css">
+        <link rel="manifest" href="/app.webmanifest">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+        <!-- <link href=”https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css” rel=”stylesheet”> -->
+        <!-- JQuery -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+    </head>
+    <body>
+        <div>
+            <a class="back-btn icon-color" href="index.html">
+                <i class="bi bi-arrow-left-circle-fill icon-color"></i>
+            </a>
+        </div>
+        <div class="container-fluid">
+            <div class="container">
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" data-tab-value="#tab_1" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                    <label class="btn btn-outline-primary" for="btnradio1">Day One</label>
+                  
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                    <label class="btn btn-outline-primary" data-tab-value="#tab_2" for="btnradio2">Day Two</label>
+                  
+                    <input type="radio" class="btn-check"data-tab-value="#tab_3"  name="btnradio" id="btnradio3" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnradio3">Day Three</label>
+                </div>
+
+                <section class="tab-content">
+                    <!-- TAB 1 Content -->
+                    <section class="tabs__tab active" id="tab_1" data-tab-info>
+                        <div id="replace" class="placeholderDiv">
+                            <h5>Oh no, you have nothing planning yet! Let's add something to your trip! </h5>
+                            <!-- <button class="btn btn-primary" type="button" data-bs-toggle="modal">Add</button> -->
+                        </div>
+                        <!-- Timeline cards will be placed here-->
+                        <h6 class="sm-text fst-italic" style="display: none;">** Place events in order... Timeline will not place events in order of time **</h6>
+                        <div id="my_div"></div>
+            
+                        <!-- Button trigger modal -->
+                        <button id="show-addTrip" class="addBtn" type="button"  class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#firstModal">
+                            <i class="fas fa-plus fa-xl"></i>
+                        </button>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="firstModal" aria-labelledby="modalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="myForm">
+                                            <div class="mb-3">
+                                                <input type="text" name="locationName" class="form-control" id="locationName" placeholder="What is being adding to your itinerary?">
+                                            </div>
+                                            <div class="mb-3">
+                                                <input id="myPicker" type="time" name="time" class="form-control" id="time">
+                                            </div>
+                                            <select class="form-select" id="tripCategory" aria-label="Default select example">
+                                                <option selected>What category are you adding to?</option>
+                                                <option value="Eat+Drink">Eat+Drink</option>
+                                                <option value="Activity">Activity</option>
+                                                <option value="Travel+Transportation">Travel+Transportation</option>
+                                                <option value="Stay">Stay</option>
+                                            </select>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button id="addTimelineCard" value="tab_1" type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add to itnerary</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </section>
+
+
+                    <!-- TAB 2 Content -->
+                    <section class="tabs__tab" id="tab_2" data-tab-info>
+                        <div id="replace" class="placeholderDiv">
+                            <h5>Oh no, you have nothing planning yet! Let's add something to your trip! </h5>
+                        </div>
+                        <!-- Timeline cards will be placed here-->
+                        <h6 class="sm-text" style="display: none;">** Place events in order... Timeline will not place events in order of time **</h6>
+                        <div id="secondDiv"></div>
+            
+                        <!-- Button trigger modal -->
+                        <button id="show-addSecondTrip" class="addBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#secondModal">
+                            <i class="fas fa-plus fa-xl"></i>
+                        </button>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="secondModal" aria-labelledby="modalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="mySecondForm">
+                                            <div class="mb-3">
+                                                <input type="text" name="locationName" class="form-control" id="locationName2" placeholder="What are you adding to your itnerary?">
+                                            </div>
+                                            <div class="mb-3">
+                                                <input type="time" name="time" class="form-control" id="time2">
+                                            </div>
+                                            <select class="form-select" id="tripCategory2" aria-label="Default select example">
+                                                <option selected>What category are you adding to?</option>
+                                                <option value="Eat+Drink">Eat+Drink</option>
+                                                <option value="Activity">Activity</option>
+                                                <option value="Transportation">Transportation</option>
+                                                <option value="Stay">Stay</option>
+                                            </select>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button id="addSecondTimelineCard" value="tab_2" type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add to itnerary</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </section>
+
+                    <!-- TAB 3 Content -->
+                    <section class="tabs__tab" id="tab_3" data-tab-info>
+                        <div id="replace" class="placeholderDiv">
+                            <h5>Oh no, you have nothing planning yet! Let's add something to your trip! </h5>
+                        </div>
+                        <!-- Timeline cards will be placed here-->
+                        <h6 class="sm-text" style="display: none;">** Place events in order... Timeline will not place events in order of time **</h6>
+                        <div id=thirdDiv></div>
+            
+                        <!-- Button trigger modal -->
+                        <button id="show-addThirdTrip" class="addBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#thirdModal">
+                            <i class="fas fa-plus fa-xl"></i>
+                        </button>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="thirdModal" aria-labelledby="modalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="myThirdForm">
+                                            <div class="mb-3">
+                                                <input type="text" name="locationName" class="form-control" id="locationName3" placeholder="What are you adding to your itnerary?">
+                                            </div>
+                                            <div class="mb-3">
+                                                <input id="time3" type="time" name="time" class="form-control">
+                                            </div>
+                                            <select class="form-select" id="tripCategory3" aria-label="Default select example">
+                                                <option selected>What category are you adding to?</option>
+                                                <option value="Eat+Drink">Eat+Drink</option>
+                                                <option value="Activity">Activity</option>
+                                                <option value="Transportation">Transportation</option>
+                                                <option value="Stay">Stay</option>
+                                            </select>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button id="addThirdTimelineCard" type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add to itnerary</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </section>
+
+                </section>
+                
+    
+            </div>
+
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+        <!-- Bootstrap -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+        <!-- Icons -->
+        <script src="https://kit.fontawesome.com/16b03efb50.js" crossorigin="anonymous"></script>
+
+        <script type="module" src="js/tripTemplate.js"></script>
+
+    </body>
+
+</html>

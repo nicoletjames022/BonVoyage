@@ -1,0 +1,23 @@
+{
+  "name": "senior",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicoletjames022/Senior-Project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nicoletjames022/Senior-Project/issues"
+  },
+  "homepage": "https://github.com/nicoletjames022/Senior-Project#readme",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.1.1",
+    "bootstrap": "^5.2.3"
+  }
+}
