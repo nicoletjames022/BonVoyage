@@ -27,6 +27,20 @@ document.querySelector("#show-addTrip").addEventListener("click", function(){
 
 // var trip = document.querySelector("#addTripCard").addEventListener("click", useData)
 // document.querySelector("#addTripCard").addEventListener("click", addSupabase())
+let diffDays = 0;
+
+$(function() {
+    $('input[name="daterange"]').daterangepicker({
+        opens: 'left',
+    }, function(start, end, label) {
+        var date1 = new Date(start.format('YYYY-MM-DD'));
+        var date2 = new Date(end.format('YYYY-MM-DD'));
+        var timeDiff = Math.abs(date2.getTime() - date1.getTime()); 
+        diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24) + 1); 
+        console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        // console.log(diffDays);
+    });
+});
 
 document.querySelector("#addTripCard").addEventListener("click", function(){
     document.querySelector("#addTripCard").addEventListener("click", async (e) => {
@@ -45,29 +59,38 @@ document.querySelector("#addTripCard").addEventListener("click", function(){
             ])
         // document.getElementById('myForm').reset();
         console.log(data);
-    });
+
+    })
     refreshData();
-});
 
-async function useData(trip){
+})
+
+
+async function useData(){
     console.log("in useData");
-    const cards = document.getElementById('newDiv');
+    const cards = document.getElementById('my_div');
 
-    const l = trip.location;
-    console.log(l);
-    const dr = (trip.daterange);
-    console.log(dr);
 
-    const link = document.createElement('h5');
-    link.className = 'card-title';
-    link.innerHTML = l;
-    cards.appendChild(link);
+    const location = document.getElementById('location').value;
+    const daterange = document.getElementById('daterange').value;
+
+
+    // const l = trip.location;
+    // console.log(l);
+    // const dr = (trip.daterange);
+    // console.log(dr);
+
+
+
+    // const link = document.createElement('h5');
+    // link.className = 'card-title';
+    // link.innerHTML = "Rome, Italy";
+    // cards.appendChild(link);
     
-    const newdate = document.createElement('p');
-    newdate.className = 'card-date';
-    newdate.innerHTML = dr;
-    cards.appendChild(newdate);
-
+    // const newdate = document.createElement('p');
+    // newdate.className = 'card-date';
+    // newdate.innerHTML = "12/01/2022 - 12/03/2022";
+    // cards.appendChild(newdate);
 
     const tripDetails = `<a href="tripTemplate.html">
                 <button id="trip-card">
@@ -82,26 +105,11 @@ async function useData(trip){
         <div class="break"></div>`;
         
     cards.innerHTML += tripDetails;
-
+    // tripDetails.innerHTML += location;
     document.getElementById('myForm').reset();   
 
 };
 
-
-let diffDays = 0;
-
-$(function() {
-    $('input[name="daterange"]').daterangepicker({
-        opens: 'left',
-    }, function(start, end, label) {
-        var date1 = new Date(start.format('YYYY-MM-DD'));
-        var date2 = new Date(end.format('YYYY-MM-DD'));
-        var timeDiff = Math.abs(date2.getTime() - date1.getTime()); 
-        diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24) + 1); 
-        console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-        // console.log(diffDays);
-    });
-});
 
 // function addSupabase() {
 //     document.querySelector("#addTripCard").addEventListener("click", async (e) => {
