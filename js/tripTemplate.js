@@ -38,9 +38,6 @@ document.querySelector("#show-addTrip").addEventListener("click", function(){
 });
 document.querySelector("#addTimelineCard").addEventListener("click", useData)
 
-
-
-
 function append_to_div(div_name, data){
     document.getElementById(div_name).innerHTML += data;
     // var changeDom = document.getElementById(div_name).appendChild(data)
@@ -82,7 +79,7 @@ document.querySelector("#addTimelineCard").addEventListener("click", async (e) =
             .from('timelineCards')
             .insert([
                 { locationName: locationName, time: time, tripCategory: tripCategory },
-            ]) // insert data into supabase
+            ])
         console.log(data, error);
     
     document.getElementById('myForm').reset();    

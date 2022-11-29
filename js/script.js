@@ -14,7 +14,6 @@ if ('serviceWorker' in navigator) {
 }
 
 let removeP = false;
-
 function removePlaceholder() {
     var placeholder = document.getElementById("replace");
     placeholder.remove();
@@ -25,10 +24,9 @@ document.querySelector("#show-addTrip").addEventListener("click", function(){
     if (!removeP) removePlaceholder();
 });
 
-// var trip = document.querySelector("#addTripCard").addEventListener("click", useData)
-// document.querySelector("#addTripCard").addEventListener("click", addSupabase())
-let diffDays = 0;
+document.querySelector("#addTripCard").addEventListener("click", addSupabase)
 
+let diffDays = 0;
 $(function() {
     $('input[name="daterange"]').daterangepicker({
         opens: 'left',
@@ -38,57 +36,17 @@ $(function() {
         var timeDiff = Math.abs(date2.getTime() - date1.getTime()); 
         diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24) + 1); 
         console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-        // console.log(diffDays);
     });
 });
 
-document.querySelector("#addTripCard").addEventListener("click", function(){
-    document.querySelector("#addTripCard").addEventListener("click", async (e) => {
-        e.preventDefault();
-        
-        const location = document.getElementById('location').value;
-        const daterange = document.getElementById('daterange').value;
-        console.log(location);
-        console.log(daterange);
-        console.log(diffDays);
-
-        let { data, error } = await supabase
-            .from('trip')
-            .insert([
-                { location: location, daterange: daterange , difference: diffDays},
-            ])
-        // document.getElementById('myForm').reset();
-        console.log(data);
-
-    })
-    refreshData();
-
-})
-
-
-async function useData(){
+async function useData(trip){
     console.log("in useData");
+    const l = trip.location;
+    const dr = (trip.daterange);
+
     const cards = document.getElementById('my_div');
-
-
-    const location = document.getElementById('location').value;
-    const daterange = document.getElementById('daterange').value;
-
-
-    // const l = trip.location;
-    // console.log(l);
-    // const dr = (trip.daterange);
-    // console.log(dr);
-
-    // const link = document.createElement('h5');
-    // link.className = 'card-title';
-    // link.innerHTML = "Rome, Italy";
-    // cards.appendChild(link);
-    
-    // const newdate = document.createElement('p');
-    // newdate.className = 'card-date';
-    // newdate.innerHTML = "12/01/2022 - 12/03/2022";
-    // cards.appendChild(newdate);
+    const location = l;
+    const daterange = dr;
 
     const tripDetails = `<a href="tripTemplate.html">
                 <button id="trip-card">
@@ -103,33 +61,27 @@ async function useData(){
         <div class="break"></div>`;
         
     cards.innerHTML += tripDetails;
-    // tripDetails.innerHTML += location;
-    document.getElementById('myForm').reset();   
-
+    // document.getElementById('myForm').reset();   
 };
 
 
-// function addSupabase() {
-//     document.querySelector("#addTripCard").addEventListener("click", async (e) => {
-//         e.preventDefault();
-        
-//         const location = document.getElementById('location').value;
-//         const daterange = document.getElementById('daterange').value;
-//         console.log(location);
-//         console.log(daterange);
-//         console.log(diffDays);
+async function addSupabase() {
+    const location = document.getElementById('location').value;
+    const daterange = document.getElementById('daterange').value;
 
-//         let { data, error } = await supabase
-//             .from('trip')
-//             .insert([
-//                 { location: location, daterange: daterange , difference: diffDays},
-//             ])
-//         // document.getElementById('myForm').reset();
-//         console.log(data);
-//     });
-//     refreshData();
- 
-// }
+    console.log(location);
+    console.log(daterange);
+    console.log(diffDays);
+
+    let { data, error } = await supabase
+        .from('trip')
+        .insert([
+            { location: location, daterange: daterange , difference: diffDays},
+        ])
+
+    refreshData();
+    document.getElementById('myForm').reset();
+}
 
 async function refreshData(){
     let { data: trip, error } = await supabase
@@ -141,25 +93,27 @@ async function refreshData(){
         return
     }
     console.log("in refresh");
-    useData(trip);
+    console.log(trip);
+    // useData(trip);
 
-    // Object.keys(trip).forEach(key => {
-    //     console.log(key); // 👉️ "name", "country"
-    //     console.log(trip[key]); // 👉️ "Tom", "Chile"
+    Object.keys(trip).forEach(key => {
+        console.log(key); // 👉️ "name", "country"
+        console.log(trip[key]); // 👉️ "Tom", "Chile"
 
-    //     var info = trip[key];
-    //     useData(info);
-    // });
+        var info = trip[key];
+        useData(info);
+    });
+    removePlaceholder()
 }
 
-// window.addEventListener('DOMContentLoaded', (event) => {
-//     if (removeP = true) {
-//         console.log('DOM fully loaded and parsed');
-//         refreshData();
-//     // removePlaceholder()
-//     }
+window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    refreshData();
+    if (removeP = false) {
+        removePlaceholder()
+    }
 
-// });
+});
 
 // NAV
 const tabs = document.querySelectorAll(".tab");
