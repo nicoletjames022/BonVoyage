@@ -94,7 +94,6 @@ async function refreshData(){
     }
     console.log("in refresh");
     console.log(trip);
-    // useData(trip);
 
     Object.keys(trip).forEach(key => {
         console.log(key); // 👉️ "name", "country"
@@ -112,7 +111,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
     if (removeP = false) {
         removePlaceholder()
     }
-
 });
 
 // NAV
@@ -129,32 +127,3 @@ tabs.forEach((clickedTab) => {
         console.log(clickedTabColor);
     });
 });
-
-
-
-// function append_to_div(div_name, data){
-//     // document.getElementById(div_name).innerHTML += data;
-
-//     let newContainerDiv = document.createElement('div');
-//     let containerDiv = document.querySelector('.newDiv');
-    
-//     newContainerDiv.classList.add('newDiv');
-//     containerDiv.appendChild(newContainerDiv);
-
-//     newContainerDiv.insertAdjacentHTML('beforebegin', data);
-// }
-
-
-// window.onload = function() {
-//     localStorage.getItem(supabase)
-//     localStorage.getItem("sections")
-//     var values = [],
-//         keys = Object.keys(localStorage),
-//         i = keys.length;
-
-//     while ( i-- ) {
-//         values.push( localStorage.getItem(keys[i]) );
-//     }
-
-//     return values;
-// }

@@ -20,31 +20,31 @@ tabs.forEach((clickedTab) => {
 });
 
 // Profile Pic
-// const imgDiv = document.querySelector(".profile-picDiv");
-// const img = document.querySelector("#photo");
-// const file = document.querySelector("#file");
-// const uploadBtn = document.querySelector("#uploadBtn");
+const imgDiv = document.querySelector(".profile-picDiv");
+const img = document.querySelector("#photo");
+const file = document.querySelector("#file");
+const uploadBtn = document.querySelector("#uploadBtn");
 
-// imgDiv.addEventListener('mouseenter', function() {
-//     uploadBtn.style.display = "block"
-// });
-// imgDiv.addEventListener('mouseleave', function() {
-//     uploadBtn.style.display = "none"
-// });
+imgDiv.addEventListener('mouseenter', function() {
+    uploadBtn.style.display = "block"
+});
+imgDiv.addEventListener('mouseleave', function() {
+    uploadBtn.style.display = "none"
+});
 
-// file.addEventListener('change', function(){
-//     const chosenFile = this.files[0];
+file.addEventListener('change', function(){
+    const chosenFile = this.files[0];
 
-//     if(chosenFile) {
-//         const reader = new FileReader();
+    if(chosenFile) {
+        const reader = new FileReader();
 
-//         reader.addEventListener('load', function(){
-//             img.setAttribute('scr', reader.result);
-//             console.log("here");
-//         });
-//         reader.readAsDataURL(chosenFile);
-//     }
-// });
+        reader.addEventListener('load', function(){
+            img.setAttribute('scr', reader.result);
+            console.log("here");
+        });
+        reader.readAsDataURL(chosenFile);
+    }
+});
 
 
 document.querySelector("#update").addEventListener("click", updateProfile);

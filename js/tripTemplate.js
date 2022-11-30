@@ -6,10 +6,10 @@ const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 
-window.addEventListener("unload", (event) => {
-    console.log("page hasn't fully loaded");
-    syncTimeline()
-});
+// window.addEventListener("unload", (event) => {
+//     console.log("page hasn't fully loaded");
+//     syncTimeline()
+// });
 
 async function syncTimeline(){
     let { data: trip, error } = await supabase
@@ -25,7 +25,6 @@ async function syncTimeline(){
 // Day 1
 
 let removeP = false;
-
 function removePlaceholder() {
     var placeholder = document.getElementById("replace");
     placeholder.remove();
@@ -36,61 +35,97 @@ document.querySelector("#show-addTrip").addEventListener("click", function(){
     if (!removeP) removePlaceholder();
     document.querySelector('.sm-text').style.display = "block";
 });
-document.querySelector("#addTimelineCard").addEventListener("click", useData)
 
-function append_to_div(div_name, data){
-    document.getElementById(div_name).innerHTML += data;
-    // var changeDom = document.getElementById(div_name).appendChild(data)
-    // div_name.appendChild(changeDom)
-}
+document.querySelector("#addTimelineCard").addEventListener("click", addSupabase)
 
-async function useData(){
-    const locationName = document.getElementById('locationName').value;
-    const t = document.querySelector('input[type="time"]');
-    const time = t.value;
-    const tripCategory = document.getElementById('tripCategory').value;
+async function useTimelineDataOne(timelinedataone){
+    console.log("in useTimelineDataOne");
+
+    const locationname = timelinedataone.locationname;
+    const t = timelinedataone.time;
+    const triptype = timelinedataone.triptype;
+
+    const locationName = locationname;
+    const time = t;
+    const tripType = triptype;
+    const cards = document.getElementById('my_div');
 
     const timelineCards = `<section class="timeline-card">
             <div class="card">
                 <div class="card-body">
                     <h6><small>${time}</small></h6>
-                    <h6><small>${tripCategory}</small></h6>
+                    <h6><small>${tripType}</small></h6>
                     <h4 class="card-title">${locationName}</h4>
                 </div>
             </div>
         </section>`;
 
-    append_to_div("my_div", timelineCards);
-
+    cards.innerHTML += timelineCards;
+    document.getElementById('myForm').reset();   
 };
-document.querySelector("#addTimelineCard").addEventListener("click", async (e) => {
-    e.preventDefault();
 
+async function addSupabase() {
     const locationName = document.getElementById('locationName').value;
-    const t = document.querySelector('input[type="time"]');
-    const time = t.value;
-    const tripCategory = document.getElementById('tripCategory').value;
-
-    console.log(locationName);
-    console.log(time);
-    console.log(tripCategory);
+    var t = document.querySelector('input[type="time"]').value;
+    const time = t;
+    const triptype = document.getElementById('tripCategory').value;
 
     let { data, error } = await supabase
-            .from('timelineCards')
+            .from('timelinecard')
             .insert([
-                { locationName: locationName, time: time, tripCategory: tripCategory },
+                { locationname: locationName, time: time, triptype: triptype },
             ])
-        console.log(data, error);
-    
-    document.getElementById('myForm').reset();    
-    
+    console.log(data, error);
+    syncTimeline();
+    refreshDataOne();
+    // document.getElementById('myForm').reset();
+}
+
+async function refreshDataOne(){
+    let { data: timelinecard, error } = await supabase
+    .from('timelinecard')
+    .select('locationname, time, triptype')
+    .range(0,10)
+    if (error) {
+        console.error(error)
+        return
+    }
+    console.log("in refresh");
+    console.log(timelinecard);
+
+    Object.keys(timelinecard).forEach(key => {
+        console.log("in refresh");
+        console.log(key); 
+        console.log(timelinecard[key]); 
+
+        var info = timelinecard[key];
+        useTimelineDataOne(info);
+    });
+    removePlaceholder()
+}
+
+window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+    refreshDataOne();
+    if (removeP = false) {
+        removePlaceholder()
+    }
 });
+
+
+
+
+
+
+
+
+
+
 
 // DAY 2
 document.querySelector("#show-addSecondTrip").addEventListener("click", function(){
     const placeholder = document.getElementById("replace");
     placeholder.remove();
-
 
     document.querySelector('.sm-text').style.display = "block";
 });
