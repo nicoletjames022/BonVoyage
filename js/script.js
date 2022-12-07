@@ -17,7 +17,7 @@ if ('serviceWorker' in navigator) {
 window.addEventListener('DOMContentLoaded', (event) => {
     console.log('DOM fully loaded and parsed');
     // refreshData();
-    if (removeP = true) {
+    if (removeP != false) {
         refreshData();
         removePlaceholder()
     }
