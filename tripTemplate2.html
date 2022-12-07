@@ -28,10 +28,16 @@
         <div class="container-fluid">
             <div class="container">
                 <div id="dateTimeline" class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                    <input type="radio" data-for-tab="1" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
                     <label class="btn btn-outline-primary" for="btnradio1">Day 1</label>
-                    
                 </div>
+                <div class="tabs-content" id="my_div"></div>
+                <!-- <div class="tabs-content" id="my_div" data-tab="1"> </div>
+                <div class="tabs-content" id="my_div2" data-tab="2"> </div>
+                <div class="tabs-content" id="my_div3" data-tab="3"> </div>
+                <div class="tabs-content" id="my_div4" data-tab="4"> </div>
+                <div class="tabs-content" id="my_div5" data-tab="5"> </div>
+                <div class="tabs-content" id="my_div6" data-tab="6"> </div> -->
 
                 <section class="tabs">
                     <!-- TAB 1 Content -->
@@ -42,7 +48,7 @@
                         </div>
                         <!-- Timeline cards will be placed here-->
                         <h6 class="sm-text fst-italic" style="display: none;">** Place events in order... Timeline will not place events in order of time **</h6>
-                        <div class="tabs-content" id="my_div"></div>
+                        <div class="tab-content"></div>
             
                         <!-- Button trigger modal -->
                         <button id="show-addTrip" class="addBtn" type="button"  class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#firstModal">

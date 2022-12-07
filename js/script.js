@@ -9,15 +9,22 @@ if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
      navigator.serviceWorker.register('../web-server.js').then( () => {
       console.log('Service Worker Registered')
-     })
+    })
+    console.log('DOM fully loaded and parsed');
+     // refreshData();
+    if (removeP = true) {
+        refreshData();
+        removePlaceholder()
+    }
+    
    })
 }
 
 let removeP = false;
 function removePlaceholder() {
     var placeholder = document.getElementById("replace");
-    placeholder.remove();
-    removeP = true;
+        placeholder.remove();
+        removeP = true;
 }
 
 document.querySelector("#show-addTrip").addEventListener("click", function(){
@@ -39,39 +46,47 @@ $(function() {
     });
 });
 
+
 async function useData(trip){
     console.log("in useData");
     const l = trip.location;
-    const dr = (trip.daterange);
+    const dr = trip.daterange;
 
     const cards = document.getElementById('my_div');
     const location = l;
     const daterange = dr;
 
+    let i = 0;
     const tripDetails = `<a href="tripTemplate.html">
                 <button id="trip-card">
-                    <div class="card" style="width: 32rem; height: 30%">
+                    <div class="card" style="width: 32rem; height: 100%">
                         <div class="card-body">
-                        <h5 class="card-title">${location}</h5>
-                        <p class="card-date">${daterange}</p>
+                            <h5 id="card-title" class="card-title">${location}</h5>
+                            <p class="card-date">${daterange}</p>
                         </div>
                     </div>
                 </button>
             </a>
-        <div class="break"></div>`;
-        
+        <div class="break"></div>`; 
+
     cards.innerHTML += tripDetails;
-    // document.getElementById('myForm').reset();   
+
+    // document.querySelector('#trip-card').addEventListener('click', () => {
+
+    //     window.location.href = "tripTemplate.html";
+    // })
+        
+    //  <button id="trip-card" value="${i++}" onclick="yourFunction('${i++}')" onclick="location.assign('tripTemplate.html')"
+    // element();
+
+    //document.getElementById('myForm').reset();   <a href="tripTemplate.html">
 };
+
 
 
 async function addSupabase() {
     const location = document.getElementById('location').value;
     const daterange = document.getElementById('daterange').value;
-
-    console.log(location);
-    console.log(daterange);
-    console.log(diffDays);
 
     let { data, error } = await supabase
         .from('trip')
@@ -92,26 +107,16 @@ async function refreshData(){
         console.error(error)
         return
     }
-    console.log("in refresh");
-    console.log(trip);
 
     Object.keys(trip).forEach(key => {
-        console.log(key); // 👉️ "name", "country"
-        console.log(trip[key]); // 👉️ "Tom", "Chile"
+        // console.log(key);
+        // console.log(trip[key]); 
 
         var info = trip[key];
         useData(info);
     });
-    removePlaceholder()
+    //removePlaceholder()
 }
-
-window.addEventListener('DOMContentLoaded', (event) => {
-    console.log('DOM fully loaded and parsed');
-    refreshData();
-    if (removeP = false) {
-        removePlaceholder()
-    }
-});
 
 // NAV
 const tabs = document.querySelectorAll(".tab");

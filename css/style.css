@@ -140,6 +140,7 @@ button:focus {
 } 
 
 .card {
+    height: 100%;
     outline: none;
     cursor: pointer;
     box-shadow: rgba(204, 219, 232) 0px 3px 8px;
@@ -152,9 +153,6 @@ button:focus {
 #my_div {
     display: flex;
     flex-wrap: wrap;
-
-
-    /* justify-content: space-between;  */
 }
 .break {
     flex-basis: 100%;
@@ -164,20 +162,3 @@ button:focus {
 a {
     text-decoration: none !important;
 }
-
-@media (min-width: 576px) {  
-    /* .btn-group {
-        left: 20px !important;
-    } */
-
-}
-
-@media (min-width: 768px) { 
-
-}
-
-/* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) {  }
-
-/* // X-Large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {  }

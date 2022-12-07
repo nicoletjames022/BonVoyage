@@ -70,11 +70,6 @@
     text-align: center;
 }
 
-.tab-content-active {
-    display: block;
-}
-
-
 [data-tab-info] {
     display: none;
 }
@@ -104,3 +99,11 @@
 .icon-color {
     color: #72A3B2 !important;
 }
+
+/* .tabs-content {
+    display: none;
+} */
+
+/* .tab-content-active {
+    display: block;
+} */

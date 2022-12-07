@@ -19,58 +19,36 @@ tabs.forEach((clickedTab) => {
     });
 });
 
-// Profile Pic
-const imgDiv = document.querySelector(".profile-picDiv");
-const img = document.querySelector("#photo");
-const file = document.querySelector("#file");
-const uploadBtn = document.querySelector("#uploadBtn");
-
-imgDiv.addEventListener('mouseenter', function() {
-    uploadBtn.style.display = "block"
-});
-imgDiv.addEventListener('mouseleave', function() {
-    uploadBtn.style.display = "none"
-});
-
-file.addEventListener('change', function(){
-    const chosenFile = this.files[0];
-
-    if(chosenFile) {
-        const reader = new FileReader();
-
-        reader.addEventListener('load', function(){
-            img.setAttribute('scr', reader.result);
-            console.log("here");
-        });
-        reader.readAsDataURL(chosenFile);
-    }
-});
-
-
+// Update Infomation
 document.querySelector("#update").addEventListener("click", updateProfile);
 
 function updateProfile() {
-    const placeholder = document.getElementById("description");
-    placeholder.remove();
-
     console.log("in updateProfile");
 
-    let newContainerDiv = document.createElement('div');
-    let containerDiv = document.querySelector('.newDiv');
+    const updateProfile = document.getElementById('profileContent');
 
-    newContainerDiv.classList.add('newDiv');
-    containerDiv.appendChild(newContainerDiv);
-
-    let name = document.getElementById('name').value;
-    let tagline = document.getElementById('tagline').value;
-    let about = document.getElementById('about').value;
+    const name = document.getElementById('name').value;
+    const tagline = document.getElementById('tagline').value;
+    const about = document.getElementById('about').value;
 
     console.log(name, tagline, about);
-    let changeProfile = `<div class="description">
-        <h2 class="name">${name}</h2>
-        <small id="tagline">${tagline}</small>
-        <textarea id="about" class="text-center">${about}</textarea>
-    </div>`;
+    let changeProfile =
+        `<div class="row justify-content-center" id="profileContent"> 
+        <div class="col-6">
+            <h2 class="name">${name}</h2>
+        </div>
+        <div class="col">
+            <button class="editPopup" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                <i class="fa-solid fa-user-pen"></i>
+            </button>
+        </div>
+        <div class="row">
+            <small class="tagline">${tagline}</small>
+        </div>
+        <div class="row">
+            <textarea class="about">${about}</textarea>
+            </div>
+        </div>`;
 
-    newContainerDiv.insertAdjacentHTML('beforebegin', changeProfile);
+    updateProfile.innerHTML = changeProfile;
 }

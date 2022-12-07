@@ -5,13 +5,37 @@ const supabaseUrl = 'https://rarwudilqkyaxobekvcn.supabase.co'
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhcnd1ZGlscWt5YXhvYmVrdmNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njc1MDU1OTEsImV4cCI6MTk4MzA4MTU5MX0.G4jez26w4I65JHemzGjlGUtXuksbUcIeIgFc8xBWWDM'
 const supabase = createClient(supabaseUrl, supabaseKey)
 
+window.onload = function() { 
+    console.log('DOM loading');
+    syncTimeline();
+    if (removeP = true) {
+        refreshData();
+        // removePlaceholder()
+    }
+};
 
-// window.addEventListener("unload", (event) => {
-//     console.log("page hasn't fully loaded");
-//     syncTimeline()
-// });
+// Setting up the number of days from user input
+function setDifferentDay(differenceInfo){
+    console.log("in setDifferent ");
+    const userDayInput = differenceInfo.difference;
+    console.log(userDayInput);
 
+    const days = document.getElementById('dateTimeline');
+    let generateDays;
+    for (let i = 1; i < userDayInput; i++) {
+        console.log("in for loop ");
+        generateDays = `<input type="radio" class="btn-check" name="btnradio" id="btnradio${i+1}" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btnradio${i+1}">Day ${i+1}</label>`;
+
+        days.innerHTML += generateDays;
+    }
+};
 async function syncTimeline(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const greetingValue = urlParams.get('greeting');
+    console.log(greetingValue);  
+
+
     let { data: trip, error } = await supabase
     .from('trip')
     .select('difference')
@@ -19,38 +43,79 @@ async function syncTimeline(){
         console.error(error)
         return
     }
-    console.log(trip);
+    Object.keys(trip).forEach(key => {
+        // console.log(i);
+        var differenceInfo = trip[key];
+        setDifferentDay(differenceInfo);
+    });
 }
 
-// Day 1
 
+// remove and show placeholder texts
 let removeP = false;
 function removePlaceholder() {
     var placeholder = document.getElementById("replace");
     placeholder.remove();
     removeP = true;
 }
-
 document.querySelector("#show-addTrip").addEventListener("click", function(){
     if (!removeP) removePlaceholder();
     document.querySelector('.sm-text').style.display = "block";
 });
 
+
+// Showing & getting data
 document.querySelector("#addTimelineCard").addEventListener("click", addSupabase)
-
-async function useTimelineDataOne(timelinedataone){
-    console.log("in useTimelineDataOne");
-
-    const locationname = timelinedataone.locationname;
-    const t = timelinedataone.time;
-    const triptype = timelinedataone.triptype;
-
-    const locationName = locationname;
+async function addSupabase() {
+    const locationName = document.getElementById('locationName').value;
+    var t = document.querySelector('input[type="time"]').value;
     const time = t;
-    const tripType = triptype;
-    const cards = document.getElementById('my_div');
+    const whichDay = document.getElementById('whichDay').value;
+    const triptype = document.getElementById('tripCategory').value;
 
-    const timelineCards = `<section class="timeline-card">
+    let { data, error } = await supabase
+        .from('timeline')
+        .insert([
+            { locationname: locationName, time: time, whichDay: whichDay, triptype: triptype },
+        ])
+    console.log(data, error);
+    // if(removeP == true){
+    //     refreshData();
+    // }
+    refreshData();
+
+    // document.getElementById('myForm').reset();
+}
+async function refreshData(){
+    let { data: timelinecard, error } = await supabase
+    .from('timeline')
+    .select('id, locationname, time, whichDay, triptype')
+    .range(0,10)
+    if (error) {
+        console.error(error)
+        return
+    }
+    Object.keys(timelinecard).forEach(key => {
+        // console.log(timelinecard[key]); 
+
+        var info = timelinecard[key];
+        useTimelineData(info);
+    });
+    removePlaceholder()
+}
+async function useTimelineData(data){
+    const whichDay = data.whichDay;
+    const locationName = data.locationname;
+    const time = data.time;
+    const tripType = data.triptype;
+
+    const cards = document.getElementById('my_div');
+    const cardsTwo = document.getElementById('my_div2');
+    const cardsThree = document.getElementById('my_div3');
+    const cardsfour = document.getElementById('my_div4');
+    // const cards = document.getElementsByClassName('tab-content');
+
+    const timelineCards = `<div class="timeline-card tabs-content" data-tab=${whichDay}>
             <div class="card">
                 <div class="card-body">
                     <h6><small>${time}</small></h6>
@@ -58,59 +123,57 @@ async function useTimelineDataOne(timelinedataone){
                     <h4 class="card-title">${locationName}</h4>
                 </div>
             </div>
-        </section>`;
+        </div>`;
+
+    console.log(timelineCards);
 
     cards.innerHTML += timelineCards;
-    document.getElementById('myForm').reset();   
+    document.getElementById('myForm').reset();  
+
 };
 
-async function addSupabase() {
-    const locationName = document.getElementById('locationName').value;
-    var t = document.querySelector('input[type="time"]').value;
-    const time = t;
-    const triptype = document.getElementById('tripCategory').value;
+function setupTabs(){
+    document.querySelectorAll("#btnradio").forEach(btn => {
+        btn.addEventListener("click", () => {
 
-    let { data, error } = await supabase
-            .from('timelinecard')
-            .insert([
-                { locationname: locationName, time: time, triptype: triptype },
-            ])
-    console.log(data, error);
-    syncTimeline();
-    refreshDataOne();
-    // document.getElementById('myForm').reset();
-}
+        })
 
-async function refreshDataOne(){
-    let { data: timelinecard, error } = await supabase
-    .from('timelinecard')
-    .select('locationname, time, triptype')
-    .range(0,10)
-    if (error) {
-        console.error(error)
-        return
-    }
-    console.log("in refresh");
-    console.log(timelinecard);
-
-    Object.keys(timelinecard).forEach(key => {
-        console.log("in refresh");
-        console.log(key); 
-        console.log(timelinecard[key]); 
-
-        var info = timelinecard[key];
-        useTimelineDataOne(info);
     });
-    removePlaceholder()
 }
 
-window.addEventListener('DOMContentLoaded', (event) => {
-    console.log('DOM fully loaded and parsed');
-    refreshDataOne();
-    if (removeP = false) {
-        removePlaceholder()
-    }
-});
+
+// async function useTimelineDataOne(timelinedataone){
+//     const locationname = timelinedataone.locationname;
+//     const t = timelinedataone.time;
+//     const triptype = timelinedataone.triptype;
+
+//     const locationName = locationname;
+//     const time = t;
+//     const tripType = triptype;
+//     const cards = document.getElementById('my_div');
+
+//     const timelineCards = `<section class="timeline-card">
+//             <div class="card">
+//                 <div class="card-body">
+//                     <h6><small>${time}</small></h6>
+//                     <h6><small>${tripType}</small></h6>
+//                     <h4 class="card-title">${locationName}</h4>
+//                 </div>
+//             </div>
+//         </section>`;
+
+//     cards.innerHTML += timelineCards;
+//     document.getElementById('myForm').reset();   
+// };
+
+
+// window.addEventListener('DOMContentLoaded', (event) => {
+//     console.log('DOM fully loaded and parsed');
+//     refreshData();
+//     if (removeP = false) {
+//         removePlaceholder()
+//     }
+// });
 
 
 
