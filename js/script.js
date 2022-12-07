@@ -104,6 +104,7 @@ async function addSupabase() {
             { location: location, daterange: daterange , difference: diffDays},
         ])
 
+    location.reload()
     refreshData();
     document.getElementById('myForm').reset();
 }
