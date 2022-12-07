@@ -83,13 +83,10 @@ async function useData(trip){
     cards.innerHTML += tripDetails;
 
     // document.querySelector('#trip-card').addEventListener('click', () => {
-
     //     window.location.href = "tripTemplate.html";
     // })
-        
     //  <button id="trip-card" value="${i++}" onclick="yourFunction('${i++}')" onclick="location.assign('tripTemplate.html')"
     // element();
-
     //document.getElementById('myForm').reset();   <a href="tripTemplate.html">
 };
 
@@ -105,7 +102,7 @@ async function addSupabase() {
             { location: location, daterange: daterange , difference: diffDays},
         ])
 
-    // location.reload()
+    window.location.reload();
     refreshData();
     document.getElementById('myForm').reset();
 }
