@@ -116,7 +116,7 @@ nav {
 
 #map {
     /* margin: 5px; */
-    height: 300px;
+    height: 500px;
     width: 100%;
-    /* position: relative !important; */
+    position: relative !important;
 }
