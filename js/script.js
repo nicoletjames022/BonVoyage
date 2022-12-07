@@ -23,7 +23,7 @@ window.addEventListener('DOMContentLoaded', () => {
     console.log(greetingValue);  
     removeP = greetingValue;
 
-    //refreshData();
+    refreshData();
     // removePlaceholder()
     if (removeP != false) {
         refreshData();
@@ -102,7 +102,7 @@ async function addSupabase() {
             { location: location, daterange: daterange , difference: diffDays},
         ])
 
-    window.location.reload();
+    // window.location.reload();
     refreshData();
     document.getElementById('myForm').reset();
 }
