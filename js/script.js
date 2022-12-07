@@ -14,20 +14,27 @@ if ('serviceWorker' in navigator) {
    })
 }
 
-window.addEventListener('DOMContentLoaded', (event) => {
+window.addEventListener('DOMContentLoaded', () => {
     console.log('DOM fully loaded and parsed');
+    console.log(removeP);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const greetingValue = urlParams.get('greeting');
+    console.log(greetingValue);  
+    removeP = greetingValue;
     // refreshData();
-    if (removeP != false) {
+    // removePlaceholder()
+    if (removeP = true) {
         refreshData();
         removePlaceholder()
     }
 });
 
-let removeP = false;
+var removeP = false;
 function removePlaceholder() {
     var placeholder = document.getElementById("replace");
-        placeholder.remove();
-        removeP = true;
+    placeholder.remove();
+    removeP = true;
 }
 
 document.querySelector("#show-addTrip").addEventListener("click", function(){
@@ -118,7 +125,6 @@ async function refreshData(){
         var info = trip[key];
         useData(info);
     });
-    //removePlaceholder()
 }
 
 // NAV

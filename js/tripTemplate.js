@@ -31,9 +31,9 @@ function setDifferentDay(differenceInfo){
     }
 };
 async function syncTimeline(){
-    const urlParams = new URLSearchParams(window.location.search);
-    const greetingValue = urlParams.get('greeting');
-    console.log(greetingValue);  
+    // const urlParams = new URLSearchParams(window.location.search);
+    // const greetingValue = urlParams.get('greeting');
+    // console.log(greetingValue);  
 
 
     let { data: trip, error } = await supabase
@@ -70,52 +70,43 @@ async function addSupabase() {
     const locationName = document.getElementById('locationName').value;
     var t = document.querySelector('input[type="time"]').value;
     const time = t;
-    const whichDay = document.getElementById('whichDay').value;
     const triptype = document.getElementById('tripCategory').value;
 
     let { data, error } = await supabase
-        .from('timeline')
+        .from('timelinecard')
         .insert([
-            { locationname: locationName, time: time, whichDay: whichDay, triptype: triptype },
+            { locationname: locationName, time: time, triptype: triptype },
         ])
     console.log(data, error);
-    // if(removeP == true){
-    //     refreshData();
-    // }
+    location.reload()
     refreshData();
 
     // document.getElementById('myForm').reset();
 }
 async function refreshData(){
     let { data: timelinecard, error } = await supabase
-    .from('timeline')
-    .select('id, locationname, time, whichDay, triptype')
+    .from('timelinecard')
+    .select('id, locationname, time, triptype')
     .range(0,10)
     if (error) {
         console.error(error)
         return
     }
     Object.keys(timelinecard).forEach(key => {
-        // console.log(timelinecard[key]); 
-
         var info = timelinecard[key];
         useTimelineData(info);
     });
     removePlaceholder()
 }
 async function useTimelineData(data){
-    const whichDay = data.whichDay;
     const locationName = data.locationname;
     const time = data.time;
     const tripType = data.triptype;
 
     const cards = document.getElementById('my_div');
-    const cardsTwo = document.getElementById('my_div2');
-    const cardsThree = document.getElementById('my_div3');
-    const cardsfour = document.getElementById('my_div4');
     // const cards = document.getElementsByClassName('tab-content');
 
-    const timelineCards = `<div class="timeline-card tabs-content" data-tab=${whichDay}>
+    const timelineCards = `<div class="timeline-card tabs-content">
             <div class="card">
                 <div class="card-body">
                     <h6><small>${time}</small></h6>
@@ -132,14 +123,6 @@ async function useTimelineData(data){
 
 };
 
-function setupTabs(){
-    document.querySelectorAll("#btnradio").forEach(btn => {
-        btn.addEventListener("click", () => {
-
-        })
-
-    });
-}
 
 
 // async function useTimelineDataOne(timelinedataone){
