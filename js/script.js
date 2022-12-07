@@ -22,9 +22,10 @@ window.addEventListener('DOMContentLoaded', () => {
     const greetingValue = urlParams.get('greeting');
     console.log(greetingValue);  
     removeP = greetingValue;
-    // refreshData();
+
+    //refreshData();
     // removePlaceholder()
-    if (removeP = true) {
+    if (removeP != false) {
         refreshData();
         removePlaceholder()
     }
@@ -104,7 +105,7 @@ async function addSupabase() {
             { location: location, daterange: daterange , difference: diffDays},
         ])
 
-    location.reload()
+    // location.reload()
     refreshData();
     document.getElementById('myForm').reset();
 }
