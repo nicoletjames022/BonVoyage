@@ -10,15 +10,18 @@ if ('serviceWorker' in navigator) {
      navigator.serviceWorker.register('../web-server.js').then( () => {
       console.log('Service Worker Registered')
     })
+    
+   })
+}
+
+window.addEventListener('DOMContentLoaded', (event) => {
     console.log('DOM fully loaded and parsed');
-     // refreshData();
+    // refreshData();
     if (removeP = true) {
         refreshData();
         removePlaceholder()
     }
-    
-   })
-}
+});
 
 let removeP = false;
 function removePlaceholder() {
