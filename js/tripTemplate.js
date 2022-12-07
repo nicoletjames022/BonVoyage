@@ -78,7 +78,7 @@ async function addSupabase() {
             { locationname: locationName, time: time, triptype: triptype },
         ])
     console.log(data, error);
-    location.reload()
+    location.reload() 
     refreshData();
 
     // document.getElementById('myForm').reset();

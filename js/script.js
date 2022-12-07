@@ -16,19 +16,18 @@ if ('serviceWorker' in navigator) {
 
 window.addEventListener('DOMContentLoaded', () => {
     console.log('DOM fully loaded and parsed');
-    console.log(removeP);
 
     const urlParams = new URLSearchParams(window.location.search);
     const greetingValue = urlParams.get('greeting');
-    console.log(greetingValue);  
+    // console.log(greetingValue);  
     removeP = greetingValue;
 
     refreshData();
-    // removePlaceholder()
-    if (removeP != false) {
-        refreshData();
-        removePlaceholder()
-    }
+    removePlaceholder()
+    // if (!removeP) {
+    //     refreshData();
+    //     removePlaceholder()
+    // } 
 });
 
 var removeP = false;
